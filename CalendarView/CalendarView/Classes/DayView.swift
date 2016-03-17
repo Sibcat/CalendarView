@@ -102,7 +102,6 @@ class DayView: UIView {
             self.dateLabel.backgroundColor = CalendarView.dayBackgroundColor
         }
         selectedLayer?.removeFromSuperlayer()
-        selectedLayer = nil
     }
     
   }
@@ -111,25 +110,21 @@ class DayView: UIView {
     selected = true
   }
     
-    private func addSelectedLayer() {
+    private func addSelectedLayer() {        
+        selectedLayer?.removeFromSuperlayer()
+        let circlePath = UIBezierPath(arcCenter: CGPoint(x: bounds.width/2, y: bounds.height/2),
+            radius: min(frame.width, frame.height) / 2,
+            startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
         
-        if selectedLayer == nil && bounds != CGRect.zero {
+        selectedLayer = CAShapeLayer()
+        selectedLayer!.path = circlePath.CGPath
+        
+        selectedLayer!.fillColor = UIColor.clearColor().CGColor
+        selectedLayer!.strokeColor = CalendarView.daySelectedCircleColor.CGColor
+        selectedLayer!.lineWidth = 1.0
+        selectedLayer?.zPosition = -1
             
-            let circlePath = UIBezierPath(arcCenter: CGPoint(x: bounds.width/2, y: bounds.height/2),
-                radius: min(frame.width, frame.height) / 2,
-                startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
-        
-            selectedLayer = CAShapeLayer()
-            selectedLayer!.path = circlePath.CGPath
-        
-            selectedLayer!.fillColor = UIColor.clearColor().CGColor
-            selectedLayer!.strokeColor = CalendarView.daySelectedCircleColor.CGColor
-            selectedLayer!.lineWidth = 1.0
-            selectedLayer?.zPosition = -1
-            
-            layer.addSublayer(selectedLayer!)
-        }
-        
+        layer.addSublayer(selectedLayer!)
     }
 
 }
