@@ -42,10 +42,14 @@ class ViewController: UIViewController {
     calendar.delegate = self
   }
     
-    private func createComplemetaryView(date: Moment, frame: CGRect) -> UIView? {
-       let v = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    private func createComplemetaryView(date: Moment) -> UIView? {
+        let compView = UIView()
+       let v = UIView(frame: CGRect(x: 10, y: 10, width: 8, height: 8))
         v.backgroundColor = UIColor.redColor()
-        return v
+        v.layer.masksToBounds = true
+        v.layer.cornerRadius = 3
+        compView.addSubview(v)
+        return compView
     }
 
 }

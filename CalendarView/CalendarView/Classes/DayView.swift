@@ -20,7 +20,7 @@ class DayView: UIView {
         if complementaryView != nil {
             complementaryView?.removeFromSuperview()
         }
-        if let comView = CalendarView.complementaryDayView(date: date, frame: bounds) {
+        if let comView = CalendarView.complementaryDayView(date: date) {
             complementaryView = comView
             addSubview(complementaryView!)
         }
@@ -69,7 +69,7 @@ class DayView: UIView {
   override func layoutSubviews() {
     super.layoutSubviews()
     dateLabel.frame = CGRectInset(bounds, 10, 10)
-    //complementaryView?.frame = bounds
+    complementaryView?.frame = bounds
     updateView()
   }
 

@@ -27,7 +27,7 @@ public class CalendarView: UIView {
     static var otherMonthBackgroundColor = UIColor.clearColor()
     static var weekLabelTextColor = UIColor.blackColor()
     static var dayFont = UIFont.systemFontOfSize(15)
-    static var complemetaryView: (date: Moment, frame: CGRect) -> UIView? = { _ in return nil }
+    static var complemetaryView: (date: Moment) -> UIView? = { _ in return nil }
     static var minMonth: Moment? = nil
     }
 
@@ -72,7 +72,7 @@ public class CalendarView: UIView {
     set { Appearance.dayFont = newValue }
   }
     
-    public class var complementaryDayView: (date: Moment, frame: CGRect) -> UIView? {
+    public class var complementaryDayView: (date: Moment) -> UIView? {
         get { return Appearance.complemetaryView }
         set { Appearance.complemetaryView = newValue }
     }
