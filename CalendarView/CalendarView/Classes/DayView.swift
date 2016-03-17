@@ -116,7 +116,7 @@ class DayView: UIView {
         if selectedLayer == nil && bounds != CGRect.zero {
             
             let circlePath = UIBezierPath(arcCenter: CGPoint(x: bounds.width/2, y: bounds.height/2),
-                radius: min(dateLabel.frame.width, dateLabel.frame.height) / 2,
+                radius: min(frame.width, frame.height) / 2,
                 startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
         
             selectedLayer = CAShapeLayer()
