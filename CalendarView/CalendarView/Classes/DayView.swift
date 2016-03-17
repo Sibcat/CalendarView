@@ -16,6 +16,15 @@ class DayView: UIView {
   var date: Moment! {
     didSet {
       dateLabel.text = date.format("d")
+        
+        if complementaryView != nil {
+            complementaryView?.removeFromSuperview()
+        }
+        if let comView = CalendarView.complementaryDayView(date: date, frame: bounds) {
+            complementaryView = comView
+            addSubview(complementaryView!)
+        }
+        
       setNeedsLayout()
     }
   }
@@ -37,6 +46,7 @@ class DayView: UIView {
       updateView()
     }
   }
+    var complementaryView: UIView?
 
   init() {
     super.init(frame: CGRectZero)
@@ -59,6 +69,7 @@ class DayView: UIView {
   override func layoutSubviews() {
     super.layoutSubviews()
     dateLabel.frame = CGRectInset(bounds, 10, 10)
+    //complementaryView?.frame = bounds
     updateView()
   }
 

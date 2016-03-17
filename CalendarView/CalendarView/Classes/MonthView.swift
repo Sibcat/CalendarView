@@ -15,7 +15,7 @@ class MonthView: UIView {
 
   var date: Moment! {
     didSet {
-      startsOn = date.startOf(.Months).weekday // Sun is 1
+      startsOn = 2// monday
       let numDays = Double(date.endOf(.Months).day + startsOn - 1)
       self.numDays = Int(ceil(numDays / 7.0) * 7)
       self.numDays = 42 // TODO: add option to always show 6 weeks
@@ -25,13 +25,13 @@ class MonthView: UIView {
 
   var weeks: [WeekView] = []
   var weekLabels: [WeekLabel] = [
-    WeekLabel(day: "SUN"),
-    WeekLabel(day: "MON"),
-    WeekLabel(day: "TUE"),
-    WeekLabel(day: "WED"),
-    WeekLabel(day: "THU"),
-    WeekLabel(day: "FRI"),
-    WeekLabel(day: "SAT"),
+    WeekLabel(day: "пн"),
+    WeekLabel(day: "вт"),
+    WeekLabel(day: "ср"),
+    WeekLabel(day: "чт"),
+    WeekLabel(day: "пт"),
+    WeekLabel(day: "сб"),
+    WeekLabel(day: "вс"),
   ]
 
   // these values are expensive to compute so cache them

@@ -16,15 +16,27 @@ class ViewController: UIViewController {
 
   var date: Moment! {
     didSet {
-      title = date.format("MMMM d, yyyy")
+      title = date.format("LLLL yyyy")
     }
   }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        CalendarView.complementaryDayView = createComplemetaryView        
+    }
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     date = moment()
     calendar.delegate = self
   }
+    
+    private func createComplemetaryView(date: Moment, frame: CGRect) -> UIView? {
+       let v = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        v.backgroundColor = UIColor.redColor()
+        return v
+    }
 
 }
 

@@ -27,7 +27,8 @@ public class CalendarView: UIView {
     static var otherMonthBackgroundColor = UIColor.clearColor()
     static var weekLabelTextColor = UIColor.blackColor()
     static var dayFont = UIFont.systemFontOfSize(15)
-  }
+    static var complemetaryView: (date: Moment, frame: CGRect) -> UIView? = { _ in return nil }
+    }
 
   public class var dayBackgroundColor: UIColor {
     get { return Appearance.dayBackgroundColor }
@@ -69,6 +70,11 @@ public class CalendarView: UIView {
     get { return Appearance.dayFont }
     set { Appearance.dayFont = newValue }
   }
+    
+    public class var complementaryDayView: (date: Moment, frame: CGRect) -> UIView? {
+        get { return Appearance.complemetaryView }
+        set { Appearance.complemetaryView = newValue }
+    }
 
   lazy var contentView: ContentView = {
     let cv = ContentView(frame: CGRectZero)
@@ -81,6 +87,7 @@ public class CalendarView: UIView {
       delegate?.calendarDidPageToDate(contentView.currentMonth().date)
     }
   }
+    
   public var selectedDayOnPaged: Int? = 1
 
   required public init?(coder aDecoder: NSCoder) {
