@@ -97,7 +97,7 @@ class ContentView: UIScrollView {
       else if page1FrameMatched {
         let newDate = page1.date.subtract(1, .Months)
         if let minDate = CalendarView.minMonth {
-            if newDate.month < minDate.month { return }
+            if newDate.month < (minDate.month - 1) { return }
         }
         page3.date =  newDate
         page1.frame = frameCurrent
