@@ -15,7 +15,7 @@ class MonthView: UIView {
 
   var date: Moment! {
     didSet {
-      startsOn = 2// monday
+      startsOn = date.startOf(.Months).weekday + 6
       let numDays = Double(date.endOf(.Months).day + startsOn - 1)
       self.numDays = Int(ceil(numDays / 7.0) * 7)
       self.numDays = 42 // TODO: add option to always show 6 weeks

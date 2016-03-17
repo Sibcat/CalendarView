@@ -405,7 +405,7 @@ public struct Moment: Comparable {
             components.second = value
         }
         let cal = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        cal.timeZone = NSTimeZone(abbreviation: "UTC")!
+        //cal.timeZone = NSTimeZone(abbreviation: "UTC")!
         if let newDate = cal.dateByAddingComponents(components, toDate: date, options: NSCalendarOptions.init(rawValue: 0)) {
           return Moment(date: newDate)
         }

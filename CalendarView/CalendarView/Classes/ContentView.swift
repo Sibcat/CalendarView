@@ -95,7 +95,11 @@ class ContentView: UIScrollView {
         print("something weird happened")
       }
       else if page1FrameMatched {
-        page3.date = page1.date.subtract(1, .Months)
+        let newDate = page1.date.subtract(1, .Months)
+        if let minDate = CalendarView.minDate {
+            if newDate < moment(minDate).startOf(.Months).subtract(1, .Days) { return }
+        }
+        page3.date =  newDate
         page1.frame = frameCurrent
         page2.frame = frameRight
         page3.frame = frameLeft
@@ -115,6 +119,9 @@ class ContentView: UIScrollView {
   }
 
   func selectDate(date: Moment) {
+    if let minDate = CalendarView.minDate {
+        if date < moment(minDate).startOf(.Months).subtract(1, .Days) { return }
+    }
     selectedDate = date
     setup()
     selectVisibleDate(date.day)

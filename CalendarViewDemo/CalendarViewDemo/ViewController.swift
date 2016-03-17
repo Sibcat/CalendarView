@@ -11,9 +11,17 @@ import CalendarView
 import SwiftMoment
 
 class ViewController: UIViewController {
-
-  @IBOutlet weak var calendar: CalendarView!
-
+   
+    @IBOutlet weak var calendar: CalendarView!
+    
+    @IBAction func onNextTap(sender: AnyObject) {
+        calendar.selectDate(date.add(1, .Months))
+    }
+    
+    @IBAction func onPrevTap(sender: AnyObject) {
+        calendar.selectDate(date.subtract(1, .Months))
+    }
+    
   var date: Moment! {
     didSet {
       title = date.format("LLLL yyyy")
@@ -28,6 +36,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    CalendarView.minDate = NSDate()
     date = moment()
     calendar.delegate = self
   }
