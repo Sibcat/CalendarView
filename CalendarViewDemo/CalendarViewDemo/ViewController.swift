@@ -36,8 +36,9 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    CalendarView.minDate = NSDate()
+    
     date = moment()
+    CalendarView.minMonth = date
     calendar.delegate = self
   }
     
