@@ -36,10 +36,14 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    
+    CalendarView.daySelectedCircleColor = UIColor.blackColor()
+    CalendarView.daySelectedBackgroundColor = UIColor.clearColor()
+    CalendarView.todayBackgroundColor = UIColor.clearColor()
+    CalendarView.daySelectedTextColor = CalendarView.dayTextColor
     date = moment()
     CalendarView.minMonth = date
     calendar.delegate = self
+    
   }
     
     private func createComplemetaryView(date: Moment, isOtherMonth: Bool) -> UIView? {

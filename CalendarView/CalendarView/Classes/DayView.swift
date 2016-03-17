@@ -47,15 +47,17 @@ class DayView: UIView {
     }
   }
     var complementaryView: UIView?
+    var selectedLayer: CAShapeLayer?
 
   init() {
     super.init(frame: CGRectZero)
+    
     let tap = UITapGestureRecognizer(target: self, action: "select")
     addGestureRecognizer(tap)
     NSNotificationCenter.defaultCenter().addObserver(self,
       selector: "onSelected:",
       name: CalendarSelectedDayNotification,
-      object: nil)
+      object: nil)  
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -70,6 +72,7 @@ class DayView: UIView {
     super.layoutSubviews()
     dateLabel.frame = CGRectInset(bounds, 10, 10)
     complementaryView?.frame = bounds
+    
     updateView()
   }
 
@@ -86,21 +89,48 @@ class DayView: UIView {
     if self.selected {
       dateLabel.textColor = CalendarView.daySelectedTextColor
       dateLabel.backgroundColor = CalendarView.daySelectedBackgroundColor
-    } else if isToday {
-      dateLabel.textColor = CalendarView.todayTextColor
-      dateLabel.backgroundColor = CalendarView.todayBackgroundColor
-    } else if isOtherMonth {
-      dateLabel.textColor = CalendarView.otherMonthTextColor
-      dateLabel.backgroundColor = CalendarView.otherMonthBackgroundColor
+        addSelectedLayer()
     } else {
-      self.dateLabel.textColor = CalendarView.dayTextColor
-      self.dateLabel.backgroundColor = CalendarView.dayBackgroundColor
+        if isToday {
+            dateLabel.textColor = CalendarView.todayTextColor
+            dateLabel.backgroundColor = CalendarView.todayBackgroundColor
+        } else if isOtherMonth {
+            dateLabel.textColor = CalendarView.otherMonthTextColor
+            dateLabel.backgroundColor = CalendarView.otherMonthBackgroundColor
+        } else {
+            self.dateLabel.textColor = CalendarView.dayTextColor
+            self.dateLabel.backgroundColor = CalendarView.dayBackgroundColor
+        }
+        selectedLayer?.removeFromSuperlayer()
+        selectedLayer = nil
     }
+    
   }
 
   func select() {
     selected = true
   }
+    
+    private func addSelectedLayer() {
+        
+        if selectedLayer == nil && bounds != CGRect.zero {
+            
+            let circlePath = UIBezierPath(arcCenter: CGPoint(x: bounds.width/2, y: bounds.height/2),
+                radius: min(dateLabel.frame.width, dateLabel.frame.height) / 2,
+                startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
+        
+            selectedLayer = CAShapeLayer()
+            selectedLayer!.path = circlePath.CGPath
+        
+            selectedLayer!.fillColor = UIColor.clearColor().CGColor
+            selectedLayer!.strokeColor = CalendarView.daySelectedCircleColor.CGColor
+            selectedLayer!.lineWidth = 1.0
+            selectedLayer?.zPosition = -1
+            
+            layer.addSublayer(selectedLayer!)
+        }
+        
+    }
 
 }
 

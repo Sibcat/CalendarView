@@ -29,6 +29,7 @@ public class CalendarView: UIView {
     static var dayFont = UIFont.systemFontOfSize(15)
     static var complemetaryView: (date: Moment, isOtherMonth: Bool) -> UIView? = { _ in return nil }
     static var minMonth: Moment? = nil
+    static var daySelectedCircleColor = UIColor.clearColor()
     }
 
   public class var dayBackgroundColor: UIColor {
@@ -76,10 +77,13 @@ public class CalendarView: UIView {
         get { return Appearance.complemetaryView }
         set { Appearance.complemetaryView = newValue }
     }
-    
     public class var minMonth: Moment? {
         get { return Appearance.minMonth }
         set { Appearance.minMonth = newValue }
+    }
+    public class var daySelectedCircleColor: UIColor {
+        get { return Appearance.daySelectedCircleColor }
+        set { Appearance.daySelectedCircleColor = newValue }
     }
 
   lazy var contentView: ContentView = {
