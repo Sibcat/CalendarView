@@ -20,7 +20,7 @@ class DayView: UIView {
         if complementaryView != nil {
             complementaryView?.removeFromSuperview()
         }
-        if let comView = CalendarView.complementaryDayView(date: date) {
+        if let comView = CalendarView.complementaryDayView(date: date, isOtherMonth: isOtherMonth) {
             complementaryView = comView
             addSubview(complementaryView!)
         }
