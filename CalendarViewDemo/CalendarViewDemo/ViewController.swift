@@ -15,11 +15,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var calendar: CalendarView!
     
     @IBAction func onNextTap(sender: AnyObject) {
-        calendar.selectDate(date.add(1, .Months))
+        //calendar.selectDate(date.add(1, .Months))
+        calendar.showNextMonth()
     }
     
     @IBAction func onPrevTap(sender: AnyObject) {
-        calendar.selectDate(date.subtract(1, .Months))
+        //calendar.selectDate(date.subtract(1, .Months))
+        calendar.showPrevMonth()
     }
     
   var date: Moment! {
