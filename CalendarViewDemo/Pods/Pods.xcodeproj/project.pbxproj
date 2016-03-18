@@ -25,6 +25,9 @@
 		A24AABB5997DDE1452044D461FBD6DD9 /* SwiftMoment-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F74B4D0F030ABCC2F2DC745190EE0FBD /* SwiftMoment-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3145D8EDA8C290BE61D87DE1A62B2B3 /* Moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D401FA74AF7993E03762D44850B25B1F /* Moment.swift */; };
 		AE0100913BDCE445D8B7743246C6586C /* Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5BC1A553604FC0AFDD620D7BFB0CC4 /* Duration.swift */; };
+		C14F55C61C9BF166005BD081 /* DayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14F55C51C9BF166005BD081 /* DayModel.swift */; };
+		C14F55C81C9BF20B005BD081 /* WeekModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14F55C71C9BF20B005BD081 /* WeekModel.swift */; };
+		C14F55CB1C9BF41A005BD081 /* MonthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14F55CA1C9BF41A005BD081 /* MonthModel.swift */; };
 		C7E27C97C5A96A9B7C447F810FCC4D1F /* EasyCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83584E667C0F4CFF11DC3E39A68D4E4 /* EasyCast.swift */; };
 		CC1B0AB47BB3609E0961AE8470B6F191 /* CalendarView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 725B8B14704C13E170A94D7B134C0950 /* CalendarView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD51A4C6E383FA3B6345B315F7484E8A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5663983737F710AA50AAA484BFA65C /* ContentView.swift */; };
@@ -95,6 +98,9 @@
 		B22132B78709F915E587A32681EA8337 /* CalendarView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CalendarView-dummy.m"; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB1CD694CAB34A37551B071BACF4C357 /* SwiftMoment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SwiftMoment.h; path = SwiftMoment/SwiftMoment/SwiftMoment.h; sourceTree = "<group>"; };
+		C14F55C51C9BF166005BD081 /* DayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayModel.swift; sourceTree = "<group>"; };
+		C14F55C71C9BF20B005BD081 /* WeekModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekModel.swift; sourceTree = "<group>"; };
+		C14F55CA1C9BF41A005BD081 /* MonthModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthModel.swift; sourceTree = "<group>"; };
 		C8F9C219FF18A3C49BA59375CFA41770 /* SwiftMoment-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftMoment-prefix.pch"; sourceTree = "<group>"; };
 		CA8CA0E7E717E68D627F12F7C353C36E /* DayView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		CBC0F7C552B739C909B650A0F42F7F38 /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = "<group>"; };
@@ -168,6 +174,7 @@
 		5B6D4DE6626F039EBE84E5018D69CD83 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C14F55C91C9BF229005BD081 /* Models */,
 				1C8D059424B4E9951548D27413CF820C /* CalendarView.swift */,
 				0A5663983737F710AA50AAA484BFA65C /* ContentView.swift */,
 				CA8CA0E7E717E68D627F12F7C353C36E /* DayView.swift */,
@@ -292,6 +299,16 @@
 				AA5184B7917D0D51D79AF851B0BAB81C /* SwiftMoment */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C14F55C91C9BF229005BD081 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C14F55C51C9BF166005BD081 /* DayModel.swift */,
+				C14F55C71C9BF20B005BD081 /* WeekModel.swift */,
+				C14F55CA1C9BF41A005BD081 /* MonthModel.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		C24887D6287504729563D92D1D202C7A /* CalendarView */ = {
@@ -487,12 +504,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C14F55C61C9BF166005BD081 /* DayModel.swift in Sources */,
+				C14F55C81C9BF20B005BD081 /* WeekModel.swift in Sources */,
 				23323ED5D2A81C591960A1A5CBFF7AE3 /* CalendarView-dummy.m in Sources */,
 				46E255051255C28860BD4B979B66B356 /* CalendarView.swift in Sources */,
 				CD51A4C6E383FA3B6345B315F7484E8A /* ContentView.swift in Sources */,
 				9C34B3690572F2B08907C34F91E13D9E /* DayView.swift in Sources */,
 				C7E27C97C5A96A9B7C447F810FCC4D1F /* EasyCast.swift in Sources */,
 				749C39AEC269C5185543CF8C361DF77A /* MonthView.swift in Sources */,
+				C14F55CB1C9BF41A005BD081 /* MonthModel.swift in Sources */,
 				9263CE1D2A929D954A8A3BA7B531A1A6 /* WeekView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

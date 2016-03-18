@@ -94,7 +94,7 @@ public class CalendarView: UIView {
   }()
   public var delegate: CalendarViewDelegate? {
     didSet {
-      delegate?.calendarDidPageToDate(contentView.currentMonth().date)
+      //delegate?.calendarDidPageToDate(contentView.currentMonth().model.date)
     }
   }
 
@@ -163,7 +163,7 @@ extension CalendarView: UIScrollViewDelegate {
 
   public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     contentView.setContentOffset(CGPointMake(CGRectGetWidth(contentView.frame), contentView.contentOffset.y), animated: true)
-    delegate?.calendarDidPageToDate(contentView.currentMonth().date)
+    delegate?.calendarDidPageToDate(contentView.currentMonth().model.date)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
       if let day = self.selectedDayOnPaged {
         let dayView = self.contentView.selectVisibleDate(day)

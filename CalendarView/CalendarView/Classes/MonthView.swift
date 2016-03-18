@@ -11,19 +11,24 @@ import SwiftMoment
 
 class MonthView: UIView {
 
-  let maxNumWeeks = 6
+    var model: MonthModel! {
+        didSet {
+            weeks = []
+            for weekModel in model.weeks {
+                let week = WeekView(frame: CGRectZero)
+                week.model = weekModel
+                addSubview(week)
+                weeks.append(week)
+            }
+            for label in weekLabels {
+                addSubview(label)
+            }
 
-  var date: Moment! {
-    didSet {
-      startsOn = date.startOf(.Months).weekday + 6
-      let numDays = Double(date.endOf(.Months).day + startsOn - 1)
-      self.numDays = Int(ceil(numDays / 7.0) * 7)
-      self.numDays = 42 // TODO: add option to always show 6 weeks
-      setWeeks()
+        }
     }
-  }
+    
+    var weeks: [WeekView] = []
 
-  var weeks: [WeekView] = []
   var weekLabels: [WeekLabel] = [
     WeekLabel(day: "пн"),
     WeekLabel(day: "вт"),
@@ -34,30 +39,14 @@ class MonthView: UIView {
     WeekLabel(day: "вс"),
   ]
 
-  // these values are expensive to compute so cache them
-  var numDays: Int = 30
-  var startsOn: Int = 0
+  
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    setup()
   }
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    setup()
-  }
-
-  func setup() {
-    weeks = []
-    for _ in 1...maxNumWeeks {
-      let week = WeekView(frame: CGRectZero)
-      addSubview(week)
-      weeks.append(week)
-    }
-    for label in weekLabels {
-      addSubview(label)
-    }
   }
 
   func setdown() {
@@ -79,12 +68,12 @@ class MonthView: UIView {
     var y: CGFloat = labelHeight + inset
     for i in 1...weeks.count {
       let week = weeks[i - 1]
-      week.frame = CGRectMake(0, y, bounds.size.width, (bounds.size.height - (labelHeight + inset) - inset) / maxNumWeeks)
+      week.frame = CGRectMake(0, y, bounds.size.width, (bounds.size.height - (labelHeight + inset) - inset) / model.maxNumWeeks)
       y = CGRectGetMaxY(week.frame)
     }
   }
 
-  func setWeeks() {
+  /*func setWeeks() {
     if weeks.count > 0 {
       let numWeeks = Int(numDays / 7)
       let firstVisibleDate  = date.startOf(.Months).endOf(.Days).subtract(startsOn - 1, .Days).startOf(.Days)
@@ -96,7 +85,7 @@ class MonthView: UIView {
         week.hidden = i > numWeeks
       }
     }
-  }
+  }*/
 
 }
 

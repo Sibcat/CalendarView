@@ -32,7 +32,36 @@ class ContentView: UIScrollView {
     showsHorizontalScrollIndicator = false
     showsVerticalScrollIndicator = false
 
-    for month in months {
+    let oldMonths = [MonthView](months)
+    for month in oldMonths {
+        month.setdown()
+        month.removeFromSuperview()
+    }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+        var monthModels = [MonthModel]()
+        let date = self.selectedDate ?? moment()
+        self.selectedDate = date
+        var currentDate = date.subtract(1, .Months)
+        for _ in 1...self.numMonthsLoaded {
+            monthModels.append(MonthModel(date: currentDate))
+            currentDate = currentDate.add(1, .Months)
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.months = []
+            for model in monthModels {
+                let month = MonthView(frame: CGRectZero)
+                month.model = model
+                self.addSubview(month)
+                self.months.append(month)
+            }
+            self.selectVisibleDate(date.day)
+            self.setNeedsLayout()
+        }
+    }
+    
+    /*for month in months {
       month.setdown()
       month.removeFromSuperview()
     }
@@ -47,7 +76,7 @@ class ContentView: UIScrollView {
       addSubview(month)
       months.append(month)
       currentDate = currentDate.add(1, .Months)
-    }
+    }*/
   }
 
   override func layoutSubviews() {
@@ -61,6 +90,7 @@ class ContentView: UIScrollView {
   }
 
   func selectPage(page: Int) {
+    if months.isEmpty { return }
     var page1FrameMatched = false
     var page2FrameMatched = false
     var page3FrameMatched = false
@@ -95,18 +125,18 @@ class ContentView: UIScrollView {
         print("something weird happened")
       }
       else if page1FrameMatched {
-        let newDate = page1.date.subtract(1, .Months)
+        let newDate = page1.model.date.subtract(1, .Months)
         if let minDate = CalendarView.minMonth {
             if newDate.month < (minDate.month - 1) && newDate.year <= minDate.year { return }
         }
-        page3.date =  newDate
+        page3.model =  MonthModel(date: newDate)
         page1.frame = frameCurrent
         page2.frame = frameRight
         page3.frame = frameLeft
         months = [page3, page1, page2]
       }
       else if page3FrameMatched {
-        page1.date = page3.date.add(1, .Months)
+        page1.model = MonthModel(date: page3.model.date.add(1, .Months))
         page1.frame = frameRight
         page2.frame = frameLeft
         page3.frame = frameCurrent
@@ -124,15 +154,14 @@ class ContentView: UIScrollView {
     }
     selectedDate = date
     setup()
-    selectVisibleDate(date.day)
-    setNeedsLayout()
+    //selectVisibleDate(date.day)
   }
 
   func selectVisibleDate(date: Int) -> DayView? {
     let month = currentMonth()
     for week in month.weeks {
       for day in week.days {
-        if day.date != nil && day.date.month == month.date.month && day.date.day == date {
+        if day.model.date != nil && day.model.date.month == month.model.date.month && day.model.date.day == date {
           day.selected = true
           return day
         }

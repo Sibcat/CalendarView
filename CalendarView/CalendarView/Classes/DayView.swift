@@ -13,21 +13,22 @@ let CalendarSelectedDayNotification = "CalendarSelectedDayNotification"
 
 class DayView: UIView {
 
-  var date: Moment! {
-    didSet {
-      dateLabel.text = date.format("d")
-        
-        if complementaryView != nil {
-            complementaryView?.removeFromSuperview()
+    var model: DayModel! {
+        didSet {
+            dateLabel.text = model.date.format("d")
+            
+            if complementaryView != nil {
+                complementaryView?.removeFromSuperview()
+            }
+            if let comView = CalendarView.complementaryDayView(date: model.date, isOtherMonth: model.isOtherMonth) {
+                complementaryView = comView
+                addSubview(complementaryView!)
+            }
+            
+            setNeedsLayout()
         }
-        if let comView = CalendarView.complementaryDayView(date: date, isOtherMonth: isOtherMonth) {
-            complementaryView = comView
-            addSubview(complementaryView!)
-        }
-        
-      setNeedsLayout()
     }
-  }
+    
   lazy var dateLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .Center
@@ -35,13 +36,12 @@ class DayView: UIView {
     self.addSubview(label)
     return label
   }()
-  var isToday: Bool = false
-  var isOtherMonth: Bool = false
+    
   var selected: Bool = false {
     didSet {
       if selected {
         NSNotificationCenter.defaultCenter()
-          .postNotificationName(CalendarSelectedDayNotification, object: date.toNSDate())
+          .postNotificationName(CalendarSelectedDayNotification, object: model.date.toNSDate())
       }
       updateView()
     }
@@ -77,7 +77,7 @@ class DayView: UIView {
   }
 
   func onSelected(notification: NSNotification) {
-    if let date = date, nsDate = notification.object as? NSDate {
+    if let date = model.date, nsDate = notification.object as? NSDate {
       let mo = moment(nsDate)
       if mo.month != date.month || mo.day != date.day {
         selected = false
@@ -91,10 +91,10 @@ class DayView: UIView {
       dateLabel.backgroundColor = CalendarView.daySelectedBackgroundColor
         addSelectedLayer()
     } else {
-        if isToday {
+        if model.isToday {
             dateLabel.textColor = CalendarView.todayTextColor
             dateLabel.backgroundColor = CalendarView.todayBackgroundColor
-        } else if isOtherMonth {
+        } else if model.isOtherMonth {
             dateLabel.textColor = CalendarView.otherMonthTextColor
             dateLabel.backgroundColor = CalendarView.otherMonthBackgroundColor
         } else {
@@ -129,22 +129,3 @@ class DayView: UIView {
 
 }
 
-public extension Moment {
-
-  func toNSDate() -> NSDate? {
-    let epoch = moment(NSDate(timeIntervalSince1970: 0))
-    let timeInterval = self.intervalSince(epoch)
-    let date = NSDate(timeIntervalSince1970: timeInterval.seconds)
-    return date
-  }
-
-  func isToday() -> Bool {
-    let cal = NSCalendar.currentCalendar()
-    return cal.isDateInToday(self.toNSDate()!)
-  }
-
-  func isSameMonth(other: Moment) -> Bool {
-    return self.month == other.month && self.year == other.year
-  }
-
-}
