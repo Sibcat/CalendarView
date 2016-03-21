@@ -19,7 +19,7 @@ class WeekModel {
         date = withDate
         month = andMonth
         days = []
-        for i in 0...7 {
+        for i in 0...6 {
             let dayDate = date.add(i, .Days)
             let day = DayModel(date: dayDate,
                 isToday: dayDate.isToday(),
